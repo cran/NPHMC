@@ -1,6 +1,6 @@
 H0 <-
-function(t,survdist,hazard,k){
- if(survdist=="exp") {return(hazard*t)}
- if(survdist=="weib") {return((hazard*t)^k)}
+function(t,survdist,k,lambda0){
+ if(survdist=="exp") {return(lambda0*t)}
+ if(survdist=="weib") {return((lambda0*t)^k)}
 }
 

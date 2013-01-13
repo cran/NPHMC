@@ -7,7 +7,7 @@ function four
 the fourth integrate function
 }
 \usage{
-f4(t, accrualtime, followuptime, hazard, accrualdist, beta0, gamma0, pi0, survdist, k)
+f4(t, accrualtime, followuptime, accrualdist, beta0, gamma0, pi0, survdist, k, lambda0)
 }
 \arguments{
   \item{t}{
@@ -19,11 +19,8 @@ accrual time. The default is 3
   \item{followuptime}{
 follow up time. The default is 4
 }
-  \item{hazard}{
-the scale parameter of exponential distribution or weibull distribution
-}
   \item{accrualdist}{
-accrual rate distribution. It can be uniform, increasing or decreasing.
+accrual rate distribution. It can be "uniform", "increasing" or "decreasing"
 }
   \item{beta0}{
 log hazard ratio of uncured patients
@@ -35,9 +32,12 @@ log odds ratio of cure rates between the two groups
 cure rate for control group. The defaultis 0.1
 }
   \item{survdist}{
-survival distribution of uncured patients, it can be exponential or weibull
+survival distribution of uncured patients, it can be "exp" or "weib"
 }
   \item{k}{
 the shape parameter of weibull distribution. By default, it is set to be 1 for exponential distribution
+}
+  \item{lambda0}{
+the scale parameter of exponential distribution or weibull distribution
 }
 }

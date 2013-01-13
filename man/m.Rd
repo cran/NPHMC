@@ -7,14 +7,11 @@ M function
 M integrate function
 }
 \usage{
-m(t, hazard, beta0, gamma0, pi0, survdist, k)
+m(t, beta0, gamma0, pi0, survdist, k, lambda0)
 }
 \arguments{
   \item{t}{
 time variable
-}
-  \item{hazard}{
-the scale parameter of exponential distribution or weibull distribution
 }
   \item{beta0}{
 log hazard ratio of uncured patients
@@ -30,5 +27,8 @@ survival distribution of uncured patients, it can be exponential or weibull
 }
   \item{k}{
 the shape parameter of weibull distribution. By default, it is set to be 1 for exponential distribution
+}
+  \item{lambda0}{
+the scale parameter of exponential distribution or weibull distribution
 }
 }

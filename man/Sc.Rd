@@ -20,6 +20,6 @@ accrual time. The default is 3
 follow up time. The default is 4
 }
   \item{accrualdist}{
-accrual rate distribution. It can be uniform, increasing or decreasing.
+accrual rate distribution. It can be "uniform", "increasing" or "decreasing"
 }
 }
