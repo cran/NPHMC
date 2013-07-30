@@ -1,10 +1,10 @@
 \name{Sc}
 \alias{Sc}
 \title{
-Sc function
+Sc Function
 }
 \description{
-Survival Distribution of Censoring times
+Survival distribution of censoring times
 }
 \usage{
 Sc(t, accrualtime, followuptime, accrualdist)
@@ -14,12 +14,12 @@ Sc(t, accrualtime, followuptime, accrualdist)
 time variable
 }
   \item{accrualtime}{
-accrual time. The default is 3
+length of accrual period.
 }
   \item{followuptime}{
-follow up time. The default is 4
+length of follow-up time.
 }
   \item{accrualdist}{
-accrual rate distribution. It can be "uniform", "increasing" or "decreasing"
+accrual pattern. It can be "\code{uniform}", "\code{increasing}" or "\code{decreasing}".
 }
 }

@@ -1,58 +1,104 @@
 \name{NPHMC}
 \alias{NPHMC}
 \title{
-An R-package for Estimating Sample Size of Proportional Hazard Cure Models
+An R-package for Estimating Sample Size and Power of Proportional Hazards Mixture Cure Model
 }
 \description{
-An R-package for Estimating Sample Size of Proportional Hazard Cure (PHMC) Model and Standard Proportional Hazard (PH) Model
+Estimating sample size and power of survival trial based on PH mixture cure model and standard PH model
 }
 \usage{
-NPHMC(power = 0.8, alpha = 0.05, accrualtime = 3, followuptime = 4, p = 0.5, accrualdist = c("uniform", "increasing", "decreasing"), hazardratio = 0.5, oddsratio = 2.15, pi0 = 0.1, survdist = c("exp", "weib"), k = 1, lambda0 = 1, data = NULL)
+NPHMC(n=NULL, power = 0.8, alpha = 0.05, accrualtime, followuptime, p = 0.5, 
+accrualdist = c("uniform", "increasing", "decreasing"), hazardratio, 
+oddsratio, pi0, survdist = c("exp", "weib"), k = 1, lambda0, data = NULL)
 }
 \arguments{
+  \item{n}{
+the sample size needed for the power calculation. The default \code{n} is NULL.
+}
   \item{power}{
-specifies the required power. The default power is 0.8
+the power needed for sample size calculation. The default \code{power} is \eqn{80\%}.
 }
   \item{alpha}{
-specifies the level significance of the statistical test. The default is 0.05.
+the level of significance of the statistical test. The default \code{alpha} is 0.05.
 }
   \item{accrualtime}{
-accrual time. The default is 3
+the length of accrual period.
 }
   \item{followuptime}{
-follow up time. The default is 4
+the length of follow-up time.
 }
   \item{p}{
-specifies the proportion of subjects in each arm. The default p is 0.5
+the proportion of subjects in the treatment arm. The default \code{p} is 0.5.
 }
   \item{accrualdist}{
-specifies the accrual rate distribution. It can be "uniform", "increasing" or "decreasing".
+the accrual pattern. It can be "\code{uniform}", "\code{increasing}" or "\code{decreasing}".
 }
   \item{hazardratio}{
-specifies the hazard ratio of uncured patients between two arms, which is equivalent to \eqn{e^{\beta_0}=\lambda_1(t) / \lambda_0(t)}. The value must be greater than 0.
+the hazard ratio of uncured patients between two arms, which is defined as \eqn{e^{\beta_0}=\lambda_1(t) / \lambda_0(t)}. The value must be greater than 0.
 }
   \item{oddsratio}{
-specifies the odds ratio of cure rates between control and treatment arms, which is calculated by \eqn{e^{\gamma_0}=\frac{\pi_1}{1-\pi_1}/\frac{\pi_0}{1-\pi_0}}. The value should be greater than 0 if cure rates exist. It can be 0 if there's no cure rate.
+the odds ratio of cure rates between two arms, which is equivalent to \eqn{e^{\gamma_0}=\frac{\pi_1}{1-\pi_1}/\frac{\pi_0}{1-\pi_0}}. The value should be greater than 0 if there is cured fraction. When it is 0, the model is reduced to the standard proportional hazards model, which means there is no cure rate.
 }
   \item{pi0}{
-specifies the cure rate for control arm which is between 0 and 1. The default is 0.1.
+the cure rate for the control arm, which is between 0 and 1.
 }
   \item{survdist}{
-specifies the survival distribution of uncured patients, it can be "exp" or "weib".
+the survival distribution of uncured patients. It can be "\code{exp}" or "\code{weib}".
 }
   \item{k}{
-if survdist = "weib", the shape parameter k needs to be specified. By default, k = 1, which refers to the exponential distribution.
+if \code{survdist} = "\code{weib}", the shape parameter \code{k} needs to be specified. By default \code{k} = 1, which refers to the exponential distribution.
 }
   \item{lambda0}{
-specifies the scale parameter of exponential distribution or Weibull distribution for survival times of uncured patients in the control arm. The default lambda0 = 1.\
- The density function of Weibull distribution with shape parameter k and scale parameter lambda0 is given by
-\deqn{f(t)=\lambda_{0}k(\lambda_{0}t)^{k-1}\exp(-(\lambda_{0}t)^k)
- } for t > 0
+the scale parameter of exponential distribution or Weibull distribution for survival times of uncured patients in the control arm. 
+
+ The density function of Weibull distribution with shape parameter \code{k} and scale parameter \eqn{\lambda_0} is given by
+\deqn{f(t)=\lambda_{0}k(\lambda_{0}t)^{k-1}\exp(-(\lambda_{0}t)^k),} for \eqn{t > 0},  
+ and the corresponding survival distribution is 
+\deqn{S(t)=\exp(-(\lambda_0 t)^k).
+ }
 }
   \item{data}{
-if observed/historical data is avaialble, the sample size can be calculated based on the nonparametric estimators from the proportional hazards mixture model by 'smcure' package in R. The data must contain three columns with order of "Time","Status" and "X" where "Time" refers to time to event of interest, "Status" refers to censoring indicator, 1=event of interest happens, and 0=censoring and "X" refers to arm indicator, 0=control and 1=treatment.
+if observed/historical \code{data} is avaialble, the sample size can be calculated based on the nonparametric estimators from the proportional hazards mixture model by '\code{smcure}' package in R. The data must contain three columns with order of "\code{Time}","\code{Status}" and "\code{X}" where "\code{Time}" refers to time to event of interest, "\code{Status}" refers to censoring indicator (1=event of interest happens, and 0=censoring) and "\code{X}" refers to arm indicator (1=treatment and 0=control). By default, \code{data}=NULL.
 }
 }
-\details{
-None
+\value{
+when \code{data} is not specified, the package can return the following estimated sample size (power) values:
+    \item{nsize }{estimated sample size based on the PH mixture cure model}
+    \item{nsizeph }{estimated sample size based on the standard PH model}
+    \item{pw }{estimated power based on the PH mixture cure model}
+    \item{pwph }{estimated power based on the standard PH model}
+
+when \code{data} is specified, the package will display the estimators from the "\code{smcure}" package in R and the returned values list as follows:
+    \item{f }{a list of estimators from the smcure package}
+    \item{nonpar }{estimated nonparametric sample size estimation based on the PH mixture cure model and observed data}
+    \item{nonparPH }{estimated nonparametric sample size estimation based on the standard PH model and observed data}
+    \item{nonparpw }{estimated nonparametric power estimation based on the PH mixture cure model and observed data}
+    \item{nonparpwph }{estimated nonparametric power estimation based on the standard PH model and observed data}    
 }
+\examples{
+
+# parametric sample size calculation
+NPHMC(power=0.90,alpha=0.05,accrualtime=3,followuptime=4,p=0.5,accrualdist="uniform",
+hazardratio=2/2.5,oddsratio=2.25,pi0=0.1,survdist="exp",k=1,lambda0=0.5)
+
+# nonparametric sample size calculation
+data(e1684szdata)
+NPHMC(power=0.80,alpha=0.05,accrualtime=4,followuptime=3,p=0.5,accrualdist="uniform",
+data=e1684szdata)
+
+# parametric power calculation
+n=seq(100, 500, by=50)
+NPHMC(n=n, alpha=0.05,accrualtime=3,followuptime=4,p=0.5,
+accrualdist="uniform", hazardratio=2/2.5,oddsratio=2.25,pi0=0.1,survdist="exp",
+k=1,lambda0=0.5)
+
+# nonparametric power calculation
+n=seq(100, 500, by=50)
+NPHMC(n=n,alpha=0.05,accrualtime=4,followuptime=3,p=0.5, 
+accrualdist="uniform",data=e1684szdata)
+}
+\keyword{PH mixture cure model }
+\keyword{sample size }
+\keyword{power }
+
+
