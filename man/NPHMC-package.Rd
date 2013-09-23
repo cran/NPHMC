@@ -11,8 +11,8 @@ Estimating sample size for survival trial with or without cure fractions
 \tabular{ll}{
 Package: \tab NPHMC\cr
 Type: \tab Package\cr
-Version: \tab 2.1\cr
-Date: \tab 2013-07-30\cr
+Version: \tab 2.2\cr
+Date: \tab 2013-09-23\cr
 License: \tab GPL-2\cr
 LazyLoad: \tab yes\cr
 }

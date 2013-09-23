@@ -7,13 +7,14 @@ An R-package for Estimating Sample Size and Power of Proportional Hazards Mixtur
 Estimating sample size and power of survival trial based on PH mixture cure model and standard PH model
 }
 \usage{
-NPHMC(n=NULL, power = 0.8, alpha = 0.05, accrualtime, followuptime, p = 0.5, 
-accrualdist = c("uniform", "increasing", "decreasing"), hazardratio, 
-oddsratio, pi0, survdist = c("exp", "weib"), k = 1, lambda0, data = NULL)
+NPHMC(n=NULL, power = 0.8, alpha = 0.05, accrualtime = NULL, 
+followuptime = NULL, p = 0.5, accrualdist = c("uniform", "increasing",
+"decreasing"), hazardratio = NULL, oddsratio = NULL, pi0 = NULL, 
+survdist = c("exp", "weib"), k = 1, lambda0 = NULL, data = NULL)
 }
 \arguments{
   \item{n}{
-the sample size needed for the power calculation. The default \code{n} is NULL.
+the sample size needed for the power calculation. 
 }
   \item{power}{
 the power needed for sample size calculation. The default \code{power} is \eqn{80\%}.
@@ -34,7 +35,7 @@ the proportion of subjects in the treatment arm. The default \code{p} is 0.5.
 the accrual pattern. It can be "\code{uniform}", "\code{increasing}" or "\code{decreasing}".
 }
   \item{hazardratio}{
-the hazard ratio of uncured patients between two arms, which is defined as \eqn{e^{\beta_0}=\lambda_1(t) / \lambda_0(t)}. The value must be greater than 0.
+the hazard ratio of uncured patients between two arms, which is defined as \eqn{e^{\beta_0}=\lambda_1(t) / \lambda_0(t)}. The value must be greater than 0 but cannot be 1 because \eqn{\beta_0} is the denominator of the sample size formula.
 }
   \item{oddsratio}{
 the odds ratio of cure rates between two arms, which is equivalent to \eqn{e^{\gamma_0}=\frac{\pi_1}{1-\pi_1}/\frac{\pi_0}{1-\pi_0}}. The value should be greater than 0 if there is cured fraction. When it is 0, the model is reduced to the standard proportional hazards model, which means there is no cure rate.

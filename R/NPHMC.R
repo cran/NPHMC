@@ -1,14 +1,15 @@
-NPHMC<-function(n=NULL, power=0.8, alpha=0.05, accrualtime, followuptime, p=0.5, 
+NPHMC<-function(n=NULL, power=0.8, alpha=0.05, accrualtime=NULL, followuptime=NULL, p=0.5, 
             accrualdist=c("uniform","increasing","decreasing"),
-		hazardratio, oddsratio, pi0, survdist=c("exp","weib"), k=1, lambda0, data=NULL){
+		hazardratio=NULL, oddsratio=NULL, pi0=NULL, survdist=c("exp","weib"), k=1, lambda0=NULL, data=NULL){
 	N<-list()
 	class(N) <- c("NPHMC") 
  	if (is.null(n) & is.null(power)) 
              stop("'n' and 'power' cannot be missing simultaneously! User must input 'n' to calculate power
                    input 'power' to calculate sample size 'n'.")
       if (is.null(data)){
-      if (hazardratio<=0) stop("Hazardratio must be greater than 0")
-	if (oddsratio<0) stop("Oddsratio cannot be less than 0")
+      if (hazardratio<=0) stop("Hazardratio must be greater than 0.")
+	if (hazardratio==1) stop("Hazardratio cannot be 1 since beta is the denominator of the sample size formula and cannot be 0.")
+	if (oddsratio<0) stop("Oddsratio cannot be less than 0.")
         if (pi0==0 | oddsratio==0) {
              i1 <- integrate(f1,0,followuptime,survdist,k,lambda0)$value
 	       i2 <- integrate(f2,followuptime,(accrualtime+followuptime),accrualtime,followuptime,accrualdist,survdist,k,lambda0)$value	  
@@ -67,8 +68,10 @@ NPHMC<-function(n=NULL, power=0.8, alpha=0.05, accrualtime, followuptime, p=0.5,
                }
 	}
      }
-  if (!is.null(data)){
-      
+ 
+  if (!is.null(data)){  
+  if(try(!is.null(hazardratio) | !is.null(oddsratio))){
+      stop("The 'hazardratio' and 'oddsratio' are not needed when data is specified.")}     	 
 	ta=accrualtime
 	tf=followuptime
 	ttot=ta+tf
@@ -150,7 +153,9 @@ NPHMC<-function(n=NULL, power=0.8, alpha=0.05, accrualtime, followuptime, p=0.5,
 		 lines(n, nonparpwph, type="o", pch=22, lty=2, col="red") }
 		 N$nonparpw <- nonparpw 
 		 N$nonparpwph <- nonparpwph 
-         }
+         }    
+	
   	}
+
 invisible(N)
  }
