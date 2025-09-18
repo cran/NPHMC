@@ -32,5 +32,5 @@ C. Cai, et al., smcure: An R-Package for estimating semiparametric mixture cure 
 }
 
 \seealso{
-\code{\link{smcure}}
+\code{\link[smcure]{smcure}}
 }
